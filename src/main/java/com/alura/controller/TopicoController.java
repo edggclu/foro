@@ -2,6 +2,7 @@ package com.alura.controller;
 
 import com.alura.domain.topico.*;
 import com.alura.domain.respuesta.RespuestaRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 @RestController
 @ResponseBody
 @RequestMapping("/topicos")
+@SecurityRequirement(name = "bearer-key")
 public class TopicoController {
     @Autowired
     TopicoService service;

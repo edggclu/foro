@@ -2,6 +2,7 @@ package com.alura.controller;
 
 import com.alura.domain.respuesta.DatosResponderTopico;
 import com.alura.domain.respuesta.RespuestaService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @ResponseBody
 @RequestMapping("/responder")
+@SecurityRequirement(name = "bearer-key")
 public class RespuestaController {
     @Autowired
     RespuestaService service;
