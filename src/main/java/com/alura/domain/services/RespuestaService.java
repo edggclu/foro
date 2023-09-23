@@ -1,5 +1,6 @@
-package com.alura.domain.respuesta;
+package com.alura.domain.services;
 
+import com.alura.domain.respuesta.*;
 import com.alura.domain.topico.TopicoRepository;
 import com.alura.domain.usuario.Usuario;
 import com.alura.infra.errores.UsuarioNoPermitidoException;
@@ -44,5 +45,15 @@ public class RespuestaService {
         }
         respuestaRepository.delete(respuesta);
 
+    }
+
+    public ActualizarDetalleRespuesta actualizar(Long id, DatosActualizarRespuesta datos) {
+        Respuesta respuesta = respuestaRepository.getReferenceById(id);
+        Usuario thisUsuario = securityFilter.getUser();
+        if(respuesta.getAutor()!=thisUsuario){
+            throw new UsuarioNoPermitidoException("No tiene permitido actualizar esta respuesta");
+        }
+        respuesta.setMensaje(datos.mensaje());
+        return new ActualizarDetalleRespuesta(respuesta);
     }
 }

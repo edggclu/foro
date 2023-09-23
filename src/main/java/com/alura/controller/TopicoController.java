@@ -1,17 +1,16 @@
 package com.alura.controller;
 
+import com.alura.domain.services.TopicoService;
 import com.alura.domain.topico.*;
 import com.alura.domain.respuesta.RespuestaRepository;
+import com.alura.respuesta.DatosRespuestaComoSolucion;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 @RestController
@@ -61,4 +60,12 @@ public class TopicoController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{idTopico}/respuesta/{respuestaId}")
+    @Transactional
+    public ResponseEntity setRespuestaComoSolucion(@PathVariable Long idTopico, @PathVariable Long respuestaId, @RequestBody @Valid DatosRespuestaComoSolucion datos) {
+        service.setSolucion(idTopico, respuestaId, datos);
+        return ResponseEntity.noContent().build();
+    }
+
 }

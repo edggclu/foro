@@ -15,6 +15,7 @@ public record DatosRevisarTopico(
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime fecha,
         StatusTopico statusTopico,
+        String autor,
         DatosDetalleCurso datos_del_curso,
         Stream<DetalleRespuestaEnTopico> respuestas
 
@@ -27,6 +28,7 @@ public record DatosRevisarTopico(
                 topico.getMensaje(),
                 topico.getFechaCreacion(),
                 topico.getStatus(),
+                topico.getAutor().getNombre(),
                 new DatosDetalleCurso(topico.getCurso().getNombre(), topico.getCurso().getCategoria()),
                 respuestas
         );

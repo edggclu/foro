@@ -9,8 +9,9 @@ public record DetalleRespuestaEnTopico(
         Long id, String mensaje,
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime fecha_de_comentario,
+        String autor,
         String util) {
     public DetalleRespuestaEnTopico(Respuesta respuesta) {
-        this(respuesta.getId(), respuesta.getMensaje(), respuesta.getFecha_de_creacion(), respuesta.getSolucion().toString());
+        this(respuesta.getId(), respuesta.getMensaje(), respuesta.getFecha_de_creacion(), respuesta.getAutor().getNombre(),respuesta.getSolucion().toString());
     }
 }

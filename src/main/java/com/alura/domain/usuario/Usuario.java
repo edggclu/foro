@@ -28,6 +28,11 @@ public class Usuario implements UserDetails {
 	private String email;
 	private String password;
 
+	public Usuario(String nombre, String email, String password) {
+		this.nombre = nombre;
+		this.email = email;
+		this.password = password;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

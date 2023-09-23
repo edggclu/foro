@@ -1,7 +1,8 @@
-package com.alura.domain.topico;
+package com.alura.domain.services;
 
 import com.alura.domain.curso.Curso;
 import com.alura.domain.curso.CursoRepository;
+import com.alura.domain.topico.*;
 import com.alura.domain.topico.detallando.DatosRevisarTopico;
 import com.alura.domain.topico.detallando.DetalleRespuestaEnTopico;
 import com.alura.domain.usuario.Usuario;
@@ -9,7 +10,10 @@ import com.alura.domain.usuario.UsuarioRepository;
 import com.alura.infra.errores.UsuarioNoPermitidoException;
 import com.alura.infra.security.SecurityFilter;
 import com.alura.domain.respuesta.RespuestaRepository;
+import com.alura.respuesta.DatosRespuestaComoSolucion;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -38,9 +42,9 @@ public class TopicoService {
         }
 
         Usuario usuario = securityFilter.getUser();
-        Curso curso = cursoRepository.getReferenceByNombreAndCategoria(datos.curso().nombre(),datos.curso().categoria());
+        Curso curso = cursoRepository.getReferenceByNombreAndCategoria(datos.curso().nombre(), datos.curso().categoria());
 
-        if(curso == null){
+        if (curso == null) {
             curso = new Curso(datos.curso().nombre(), datos.curso().categoria());
             cursoRepository.save(curso);
         }
@@ -81,6 +85,25 @@ public class TopicoService {
             throw new UsuarioNoPermitidoException("No tiene permitido eliminar este topico");
         }
         topicoRepository.delete(topico);
+
+    }
+
+    public void setSolucion(Long idTopico, Long respuestaId, DatosRespuestaComoSolucion datos) {
+        var topico = topicoRepository.getReferenceById(idTopico);
+        var respuesta = respuestaRepository.getReferenceById(respuestaId);
+        var usuarioAutor = securityFilter.getUser();
+
+        if (topico == null || respuesta == null) {
+            ResponseEntity.notFound();
+            throw new ValidationException("Path Invalido");
+        }
+        if (respuesta.getTopico() != topico) {
+            throw new ValidationException("Esta respuesta no le pertenece a este topico");
+        }
+        if (usuarioAutor != topico.getAutor()) {
+            throw new UsuarioNoPermitidoException("Solo el autor tiene permitido seleccionar solucion");
+        }
+        respuesta.setSolucion(datos.solucion());
 
     }
 }

@@ -1,9 +1,9 @@
 package com.alura.controller;
 
+import com.alura.domain.respuesta.DatosActualizarRespuesta;
 import com.alura.domain.respuesta.DatosResponderTopico;
-import com.alura.domain.respuesta.RespuestaService;
+import com.alura.domain.services.RespuestaService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +29,12 @@ public class RespuestaController {
     public ResponseEntity delete(@PathVariable Long id) {
          service.delete(id);
          return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity delete(@PathVariable Long id, @RequestBody @Valid DatosActualizarRespuesta datos) {
+        var response = service.actualizar(id, datos);
+        return ResponseEntity.ok(response);
     }
 }
