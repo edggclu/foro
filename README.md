@@ -17,7 +17,7 @@
   - [Token JWT](https://jwt.io/)
 
 Este challenge numero 7, trato sobre el desarollo
-de una Foro en Java junto con Spring Framework,
+de un Foro en Java junto con Spring Framework,
 en la cual debimos hacernos cargo del mapeo de
 entidades en entorno JPA y patron CRUD
  
