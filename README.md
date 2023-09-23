@@ -20,6 +20,15 @@ Este challenge numero 7, trato sobre el desarollo
 de un Foro en Java junto con Spring Framework,
 en la cual debimos hacernos cargo del mapeo de
 entidades en entorno JPA y patron CRUD
+
+### Dependencias
+- Flyway
+- Lombok
+- Mysql-connector-j
+- Spring starter web
+- auth0
+- Spring security
+- Springdoc OpenApi 
  
 ### La aplicacion cuenta con
 - Autenticacion de Usuarios mendiante JWToken
